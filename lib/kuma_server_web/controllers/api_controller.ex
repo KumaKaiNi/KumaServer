@@ -3,6 +3,10 @@ defmodule KumaServerWeb.ApiController do
 
   # curl -XPOST -H 'Content-Type: application/json' --data-binary '{"test":true}' dev.riichi.me
   def handle(conn, params) do
-    json conn, %{"kuma" => true}
+    json conn, parse(data)
+  end
+
+  defp parse(data) do
+    %{kuma: true, data: data}
   end
 end

@@ -15,13 +15,10 @@ defmodule KumaServerWeb.Router do
   def auth(conn, _opts) do    
     case Plug.Conn.get_req_header(conn, "auth") do
       ["test"] -> conn
-      _ -> unauthorized(conn)
+      _ -> 
+        conn
+        |> send_resp(401, "unauthorized")
+        |> halt()
     end
-  end
-
-  def unauthorized(conn) do
-    conn
-    |> send_resp(401, "unauthorized")
-    |> halt()
   end
 end
