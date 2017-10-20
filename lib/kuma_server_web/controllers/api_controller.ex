@@ -4,7 +4,11 @@ defmodule KumaServerWeb.ApiController do
 
   # curl -XPOST -H 'Content-Type: application/json' -H 'Auth: test' --data-binary '{"content": {"message":{"text":"!ping"}}}' dev.riichi.me
   def handle(conn, params) do
-    json conn, parse(params.content)
+    data = for {key, val} <- params, into: %{}, do
+      {String.to_atom(key), val}
+    end
+
+    json conn, parse(data.content)
   end
 
   defp parse(data) do
