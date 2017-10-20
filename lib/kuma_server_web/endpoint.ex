@@ -1,14 +1,14 @@
-defmodule KumaServerDevWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :kuma_server_dev
+defmodule KumaServerWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :kuma_server
 
-  socket "/socket", KumaServerDevWeb.UserSocket
+  socket "/socket", KumaServerWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :kuma_server_dev, gzip: false,
+    at: "/", from: :kuma_server, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -35,10 +35,10 @@ defmodule KumaServerDevWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_kuma_server_dev_key",
+    key: "_kuma_server_key",
     signing_salt: "gl/Omxom"
 
-  plug KumaServerDevWeb.Router
+  plug KumaServerWeb.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

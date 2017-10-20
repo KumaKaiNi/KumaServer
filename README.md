@@ -1,4 +1,4 @@
-# KumaServerDev
+# KumaServer
 
 To start your Phoenix server:
 

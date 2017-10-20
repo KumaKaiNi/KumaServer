@@ -1,4 +1,4 @@
-defmodule KumaServerDevWeb.ErrorHelpers do
+defmodule KumaServerWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule KumaServerDevWeb.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(KumaServerDevWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(KumaServerWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(KumaServerDevWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(KumaServerWeb.Gettext, "errors", msg, opts)
     end
   end
 end

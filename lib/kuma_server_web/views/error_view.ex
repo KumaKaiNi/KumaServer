@@ -1,5 +1,5 @@
-defmodule KumaServerDevWeb.ErrorView do
-  use KumaServerDevWeb, :view
+defmodule KumaServerWeb.ErrorView do
+  use KumaServerWeb, :view
 
   def render("404.html", _assigns) do
     "Page not found"

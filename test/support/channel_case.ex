@@ -1,4 +1,4 @@
-defmodule KumaServerDevWeb.ChannelCase do
+defmodule KumaServerWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,7 +21,7 @@ defmodule KumaServerDevWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint KumaServerDevWeb.Endpoint
+      @endpoint KumaServerWeb.Endpoint
     end
   end
 

@@ -6,11 +6,11 @@
 use Mix.Config
 
 # Configures the endpoint
-config :kuma_server_dev, KumaServerDevWeb.Endpoint,
+config :kuma_server, KumaServerWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "NYvA1+HAF4sWxl4C9q8vxtWQM8Ltu6WppvdtbeanCmX4W7dduygtFpBodHmTt/A6",
-  render_errors: [view: KumaServerDevWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: KumaServerDev.PubSub,
+  render_errors: [view: KumaServerWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: KumaServer.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

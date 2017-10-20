@@ -1,5 +1,5 @@
-defmodule KumaServerDevWeb.PageControllerTest do
-  use KumaServerDevWeb.ConnCase
+defmodule KumaServerWeb.ApiControllerTest do
+  use KumaServerWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

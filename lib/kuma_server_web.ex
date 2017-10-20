@@ -1,12 +1,12 @@
-defmodule KumaServerDevWeb do
+defmodule KumaServerWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use KumaServerDevWeb, :controller
-      use KumaServerDevWeb, :view
+      use KumaServerWeb, :controller
+      use KumaServerWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,17 +19,17 @@ defmodule KumaServerDevWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: KumaServerDevWeb
+      use Phoenix.Controller, namespace: KumaServerWeb
       import Plug.Conn
-      import KumaServerDevWeb.Router.Helpers
-      import KumaServerDevWeb.Gettext
+      import KumaServerWeb.Router.Helpers
+      import KumaServerWeb.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/kuma_server_dev_web/templates",
-                        namespace: KumaServerDevWeb
+      use Phoenix.View, root: "lib/kuma_server_web/templates",
+                        namespace: KumaServerWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
@@ -37,9 +37,9 @@ defmodule KumaServerDevWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import KumaServerDevWeb.Router.Helpers
-      import KumaServerDevWeb.ErrorHelpers
-      import KumaServerDevWeb.Gettext
+      import KumaServerWeb.Router.Helpers
+      import KumaServerWeb.ErrorHelpers
+      import KumaServerWeb.Gettext
     end
   end
 
@@ -54,7 +54,7 @@ defmodule KumaServerDevWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import KumaServerDevWeb.Gettext
+      import KumaServerWeb.Gettext
     end
   end
 

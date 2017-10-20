@@ -1,6 +1,6 @@
-defmodule KumaServerDev do
+defmodule KumaServer do
   @moduledoc """
-  KumaServerDev keeps the contexts that define your domain
+  KumaServer keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless
