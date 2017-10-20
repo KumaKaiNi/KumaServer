@@ -8,6 +8,6 @@ defmodule KumaServerDevWeb.Router do
   scope "/", KumaServerDevWeb do
     pipe_through :api # Use the default browser stack
 
-    get "/", PageController, :index
+    post "/", PageController, :index
   end
 end
