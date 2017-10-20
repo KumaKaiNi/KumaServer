@@ -12,9 +12,7 @@ defmodule KumaServerWeb.Router do
     post "/", ApiController, :handle
   end
 
-  def auth(conn, _opts) do
-    IO.inspect Plug.Conn.get_req_header(conn, "auth")
-    
+  def auth(conn, _opts) do    
     case Plug.Conn.get_req_header(conn, "auth") do
       ["test"] -> conn
       _ -> unauthorized(conn)
