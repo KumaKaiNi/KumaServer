@@ -13,7 +13,7 @@ defmodule KumaServerWeb.Router do
   end
 
   def auth(conn, _opts) do
-    case Plug.Conn.get_req_header(conn, "Auth") do
+    case Plug.Conn.get_req_header(conn, "auth") do
       nil -> unauthorized(conn)
       auth -> case auth do
         "test" -> conn
