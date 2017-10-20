@@ -1,12 +1,14 @@
 defmodule KumaServerWeb.ApiController do
   use KumaServerWeb, :controller
+  use KumaServer.Module
 
-  # curl -XPOST -H 'Content-Type: application/json' --data-binary '{"test":true}' dev.riichi.me
+  # curl -XPOST -H 'Content-Type: application/json' -H 'Auth: test' --data-binary '{"content": {"message":{"text":"!ping"}}}' dev.riichi.me
   def handle(conn, params) do
-    json conn, parse(params)
+    json conn, parse(params.content)
   end
 
   defp parse(data) do
-    %{kuma: true, data: data}
+    match "!ping", do: %{text: "Pong!"}
+    match "!foo", do: %{text: "Bar!"}
   end
 end
