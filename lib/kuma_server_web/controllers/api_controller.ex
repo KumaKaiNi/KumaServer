@@ -11,8 +11,8 @@ defmodule KumaServerWeb.ApiController do
   defp parse(data) do
     #match "!foo", do: %{text: "Bar!"}
     #match "!ping", do: %{text: "Pong!"}
-    if Regex.compile!("^(!foo})") |> Regex.match?(data.message.text), do: %{text: "Bar!"}
-    if Regex.compile!("^(!ping})") |> Regex.match?(data.message.text), do: %{text: "Pong!"}
+    if Regex.compile!("^(!foo)") |> Regex.match?(data.message.text), do: %{text: "Bar!"}
+    if Regex.compile!("^(!ping)") |> Regex.match?(data.message.text), do: %{text: "Pong!"}
   end
 
   defp keys_to_atoms(struct) do
