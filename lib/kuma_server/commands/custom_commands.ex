@@ -9,7 +9,7 @@ defmodule KumaServer.Commands.CustomCommands do
   def custom_command(data) do
     case query_data(:commands, data.message.text) do
       nil -> nil
-      response - > reply %{text: response}
+      response -> reply %{text: response}
     end
   end
 
