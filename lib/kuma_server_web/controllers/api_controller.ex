@@ -7,7 +7,7 @@ defmodule KumaServerWeb.ApiController do
   def handle(conn, params) do
     data = struct(KumaServer.Request, keys_to_atoms(params))
 
-    case data do
+    case data.message.text do
       nil -> 
         conn
         |> send_resp(400, "bad request")
