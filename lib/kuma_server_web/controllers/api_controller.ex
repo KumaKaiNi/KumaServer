@@ -9,9 +9,9 @@ defmodule KumaServerWeb.ApiController do
   end
 
   defp parse(data) do
-    #match "!foo", do: %{text: "Bar!"}
-    #match "!ping", do: %{text: "Pong!"}
+    # match "!foo", do: %{text: "Bar!"}
     if Regex.compile!("^(!foo)") |> Regex.match?(data.message.text), do: %{text: "Bar!"}
+    # match "!ping", do: %{text: "Pong!"}
     if Regex.compile!("^(!ping)") |> Regex.match?(data.message.text), do: %{text: "Pong!"}
   end
 
