@@ -14,6 +14,7 @@ defmodule KumaServerWeb.ApiController do
       match "!foo"  -> %{text: "Bar!"}
       match "!ping" -> %{text: "Pong!"}
       match "!fuck" -> %{text: "You!"}
+      true          -> nil
     end
   end
 end
