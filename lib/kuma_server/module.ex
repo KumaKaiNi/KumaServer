@@ -9,7 +9,7 @@ defmodule KumaServer.Module do
     regex_guard = Regex.compile!("^(#{text})") |> Macro.escape
     
     quote do
-      defp match(var!(data)) when Regex.match?(unquote(regex_guard), var!(data).message.text), do: unquote(body)
+      defp match(%{message: var!(message_text)} = var!(data)) when Regex.match?(unquote(regex_guard), var!(message_text)), do: unquote(body)
     end
   end
 
