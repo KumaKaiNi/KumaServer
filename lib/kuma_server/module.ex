@@ -5,11 +5,11 @@ defmodule KumaServer.Module do
     end
   end
 
-  defmacro match(text, do: body) when is_bitstring(text) do
-    regex_guard = Regex.compile!("^(#{text})") |> Macro.escape
-    
+  defmacro match(text, do: body) when is_bitstring(text) do    
     quote do
-      defp match(%{message: var!(message_text)} = var!(data)) when Regex.match?(unquote(regex_guard), var!(message_text)), do: unquote(body)
+      defp match(var!(data)) when is_match(unquote(text), var!(data)) do
+        unquote(body)
+      end
     end
   end
 
