@@ -4,7 +4,7 @@ defmodule KumaServerWeb.ApiController do
 
   # curl -XPOST -H 'Content-Type: application/json' -H 'Auth: test' --data-binary '{"content": {"message":{"text":"!ping"}}}' dev.riichi.me/api
   def handle(conn, params) do
-    data = atomize_map(params)    
+    data = keys_to_atoms(params)
     json conn, parse(data.content)
   end
 
@@ -13,10 +13,10 @@ defmodule KumaServerWeb.ApiController do
     match "!foo", do: %{text: "Bar!"}
   end
 
-  defp atomize_map(struct) do
-    struct |> Enum.reduce %{}, fn({key, val}, acc) ->
+  defp keys_to_atoms(struct) do
+    Enum.reduce struct, %{}, fn({key, val}, acc) ->
       cond do
-        is_map(val) -> Map.put(acc, String.to_atom(key), atomize_map(val))
+        is_map(val) -> Map.put(acc, String.to_atom(key), keys_to_atoms(val))
         true        -> Map.put(acc, String.to_atom(key), val)
       end
     end
