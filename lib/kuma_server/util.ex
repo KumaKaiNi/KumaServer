@@ -39,7 +39,7 @@ defmodule KumaServer.Util do
   """
   @spec store_data(atom | String.t, String.t, any) :: :ok | {:error, any}
   def store_data(table, key, value) do
-    file = "/home/bowan/bots/_db/#{table}.dets"
+    file = '/home/bowan/bots/_db/#{table}.dets'
     {:ok, _} = :dets.open_file(table, [file: file, type: :set])
     response = :dets.insert(table, {key, value})
 
@@ -52,7 +52,7 @@ defmodule KumaServer.Util do
   """
   @spec query_data(atom | String.t, String.t) :: any
   def query_data(table, key) do
-    file = "/home/bowan/bots/_db/#{table}.dets"
+    file = '/home/bowan/bots/_db/#{table}.dets'
     {:ok, _} = :dets.open_file(table, [file: file, type: :set])
     result = :dets.lookup(table, key)
 
@@ -71,7 +71,7 @@ defmodule KumaServer.Util do
   """
   @spec query_all_data(atom | String.t) :: [any]
   def query_all_data(table) do
-    file = "/home/bowan/bots/_db/#{table}.dets"
+    file = '/home/bowan/bots/_db/#{table}.dets'
     {:ok, _} = :dets.open_file(table, [file: file, type: :set])
     result = :dets.match_object(table, {:"$1", :"$2"})
 
@@ -90,7 +90,7 @@ defmodule KumaServer.Util do
   """
   @spec delete_data(atom | String.t, String.t) :: :ok | {:error, any}
   def delete_data(table, key) do
-    file = "/home/bowan/bots/_db/#{table}.dets"
+    file = '/home/bowan/bots/_db/#{table}.dets'
     {:ok, _} = :dets.open_file(table, [file: file, type: :set])
 
     response = :dets.delete(table, key)
