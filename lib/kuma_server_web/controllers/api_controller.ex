@@ -20,9 +20,9 @@ defmodule KumaServerWeb.ApiController do
 
   def parse(data) do
     cond do
-      is_mod() and match "!foo" -> %{text: "Bar!"}
-      match "!ping" -> %{text: "Pong!"}
-      true          -> nil
+      is_mod() and match "!foo" -> reply %{text: "Bar!"}
+      match "!ping" -> reply %{text: "Pong!"}
+      true -> reply %{reply: false, reason: "no response"}
     end
   end
 end

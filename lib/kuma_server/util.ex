@@ -12,4 +12,8 @@ defmodule KumaServer.Util do
       end
     end
   end
+
+  def reply(json_map) do
+    struct KumaServer.Response, json_map
+  end
 end
