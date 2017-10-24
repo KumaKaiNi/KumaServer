@@ -9,8 +9,8 @@ defmodule KumaServerWeb.ApiController do
   end
 
   defp parse(data) do
-    match "!ping", do: %{text: "Pong!"}
     match "!foo", do: %{text: "Bar!"}
+    match "!ping", do: %{text: "Pong!"}
   end
 
   defp keys_to_atoms(struct) do
