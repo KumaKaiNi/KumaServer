@@ -12,7 +12,7 @@ defmodule KumaServerWeb.ApiController do
         conn
         |> send_resp(400, "bad request")
         |> halt()
-      data ->
+      _message ->
         conn
         |> json(parse(data))
     end
