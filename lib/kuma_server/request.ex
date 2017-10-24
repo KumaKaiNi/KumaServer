@@ -71,7 +71,27 @@ defmodule KumaServer.Request do
   }
 
   @enforce_keys [:protocol, :channel, :user, :message]
-  defstruct [:protocol, :guild, :channel, :user, :message]
+  defstruct [
+    protocol: "unknown",
+    guild: %{id: nil, name: "unknown"},
+    channel: %{
+      id: nil,
+      name: "unknown",
+      private: false,
+      nsfw: false
+    },
+    user: %{
+      id: nil,
+      name: "unknown",
+      avatar: nil,
+      moderator: false
+    },
+    message: %{
+      id: nil,
+      text: nil,
+      image: nil
+    }
+  ]
   @type t :: %{
     protocol: protocol,
     guild: guild,
