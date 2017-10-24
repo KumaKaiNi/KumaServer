@@ -6,7 +6,7 @@ defmodule KumaServerWeb.Router do
     plug :auth
   end
 
-  scope "/", KumaServerWeb do
+  scope "/api", KumaServerWeb do
     pipe_through :api # Use the default browser stack
 
     post "/", ApiController, :handle
