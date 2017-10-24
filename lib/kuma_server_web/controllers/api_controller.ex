@@ -22,7 +22,7 @@ defmodule KumaServerWeb.ApiController do
     cond do
       is_mod() and match "!foo" -> reply %{text: "Bar!"}
       match "!ping" -> reply %{text: "Pong!"}
-      true -> reply %{reply: false, reason: "no response"}
+      true -> noreply "no match"
     end
   end
 end

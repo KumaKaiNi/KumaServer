@@ -20,11 +20,7 @@ defmodule KumaServer.Response do
   @enforce_keys [:reply]
   defstruct [
     reply: false,
-    reason: nil,
-    response: %{
-      text: nil,
-      image: nil
-    }
+    reason: nil
   ]
   @type t :: %__MODULE__{
     reply: reply,

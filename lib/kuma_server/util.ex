@@ -14,6 +14,11 @@ defmodule KumaServer.Util do
   end
 
   def reply(json_map) do
-    struct KumaServer.Response, json_map
+    response = %{reply: true, response: json_map}
+    struct KumaServer.Response, response
+  end
+
+  def noreply(reason) do
+    struct KumaServer.Response, %{reply: false, reason: reason}
   end
 end
