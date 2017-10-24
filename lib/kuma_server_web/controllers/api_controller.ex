@@ -13,8 +13,15 @@ defmodule KumaServerWeb.ApiController do
         |> send_resp(400, "bad request")
         |> halt()
       _message ->
-        conn
-        |> json(parse(data))
+        case parse(data) do
+          nil ->
+            conn
+            |> send_resp(204, "")
+            |> halt()
+          response ->
+            conn
+            |> json(response)
+        end
     end
   end
 
@@ -22,7 +29,7 @@ defmodule KumaServerWeb.ApiController do
     cond do
       is_mod() and match "!foo" -> reply %{text: "Bar!"}
       match "!ping" -> reply %{text: "Pong!"}
-      true -> noreply "no match"
+      true -> nil
     end
   end
 end
