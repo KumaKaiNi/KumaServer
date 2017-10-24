@@ -1,8 +1,4 @@
 defmodule KumaServer.Util do
-  def is_match(text, data) do
-    Regex.compile!("^(#{text})") |> Regex.match?(data.message.text)
-  end
-
   def keys_to_atoms(struct) do
     Enum.reduce struct, %{}, fn({key, val}, acc) ->
       cond do
