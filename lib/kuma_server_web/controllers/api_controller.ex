@@ -14,7 +14,7 @@ defmodule KumaServerWeb.ApiController do
         |> halt()
       data ->
         conn
-        |> json(parse(data.content))
+        |> json(parse(data))
     end
   end
 
