@@ -7,7 +7,7 @@ defmodule KumaServer.Module do
 
   defmacro match(text, do: body) when is_bitstring(text) do    
     quote do
-      defp match(var!(data)) when is_match(unquote(text), var!(data)) do
+      defp match(var!(data)) when is_match(unquote(text), var!(data)) == true do
         unquote(body)
       end
     end
