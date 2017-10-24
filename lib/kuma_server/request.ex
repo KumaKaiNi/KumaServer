@@ -86,11 +86,7 @@ defmodule KumaServer.Request do
       avatar: nil,
       moderator: false
     },
-    message: %{
-      id: nil,
-      text: nil,
-      image: nil
-    }
+    message: nil
   ]
   @type t :: %{
     protocol: protocol,
