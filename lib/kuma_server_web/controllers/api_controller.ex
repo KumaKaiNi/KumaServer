@@ -5,13 +5,22 @@ defmodule KumaServerWeb.ApiController do
 
   # curl -XPOST -H 'Content-Type: application/json' -H 'Auth: test' --data-binary '{"content": {"message":{"text":"!ping"}}}' dev.riichi.me/api
   def handle(conn, params) do
-    data = keys_to_atoms(params)
-    json conn, parse(data.content)
+    data = struct!(KumaServer.Request, keys_to_atoms(params))
+
+    case data do
+      nil -> 
+        conn
+        |> send_resp(400, "bad request")
+        |> halt()
+      data ->
+        conn
+        |> json(parse(data.content))
+    end
   end
 
   def parse(data) do
     cond do
-      match "!foo"  -> %{text: "Bar!"}
+      match "!foo" and is_mod() -> %{text: "Bar!"}
       match "!ping" -> %{text: "Pong!"}
       true          -> nil
     end

@@ -18,4 +18,22 @@ defmodule KumaServer.Module do
       |> Regex.match?(var!(data).message.text)
     end
   end
+
+  defmacro is_mod do
+    quote do
+      var!(data).user.moderator
+    end
+  end
+
+  defmacro is_private do
+    quote do
+      var!(data).source.channel.private
+    end
+  end
+
+  defmacro is_nsfw do
+    quote do
+      var!(data).source.channel.nsfw
+    end
+  end
 end
