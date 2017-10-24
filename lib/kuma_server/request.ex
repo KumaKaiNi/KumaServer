@@ -1,7 +1,4 @@
 defmodule KumaServer.Request do
-  @typedoc "request type"
-  @type type :: String.t
-
   @typedoc "protocol of the message (discord, irc, etc)"
   @type protocol :: String.t
 
@@ -73,19 +70,13 @@ defmodule KumaServer.Request do
     image: message_image_url
   }
 
-  @typedoc "content struct"
-  @type content :: %{
+  @enforce_keys [:protocol, :channel, :user, :message]
+  defstruct [:protocol, :guild, :channel, :user, :message]
+  @type t :: %{
     protocol: protocol,
     guild: guild,
     channel: channel,
     user: user,
     message: message
-  }
-
-  @enforce_keys [:type, :content]
-  defstruct [:auth, :type, :content]
-  @type t :: %__MODULE__{
-    type: type,
-    content: content
   }
 end
