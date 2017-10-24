@@ -13,6 +13,7 @@ defmodule KumaServerWeb.ApiController do
     cond do
       match "!foo"  -> %{text: "Bar!"}
       match "!ping" -> %{text: "Pong!"}
+      match "!fuck" -> %{text: "You!"}
     end
   end
 end
