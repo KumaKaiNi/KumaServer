@@ -3,9 +3,9 @@ defmodule KumaServerWeb.ApiController do
   use KumaServer.Module
   import KumaServer.Util
 
-  # curl -XPOST -H 'Content-Type: application/json' -H 'Auth: test' --data-binary '{"content": {"message":{"text":"!ping"}}}' dev.riichi.me/api
+  # curl -XPOST -H 'Content-Type: application/json' -H 'Auth: test' --data-binary '{"message":{"text":"!ping"}}' dev.riichi.me/api
   def handle(conn, params) do
-    data = struct!(KumaServer.Request, keys_to_atoms(params))
+    data = struct(KumaServer.Request, keys_to_atoms(params))
 
     case data do
       nil -> 
