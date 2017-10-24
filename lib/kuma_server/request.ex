@@ -1,7 +1,4 @@
 defmodule KumaServer.Request do
-  @typedoc "authentication key"
-  @type auth :: String.t
-
   @typedoc "request type"
   @type type :: String.t
 
@@ -85,10 +82,9 @@ defmodule KumaServer.Request do
     message: message
   }
 
-  @enforce_keys [:auth, :type, :content]
+  @enforce_keys [:type, :content]
   defstruct [:auth, :type, :content]
   @type t :: %__MODULE__{
-    auth: auth,
     type: type,
     content: content
   }
