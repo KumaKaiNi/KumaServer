@@ -11,8 +11,8 @@ defmodule KumaServerWeb.ApiController do
 
   def parse(data) do
     cond do
-      match "!foo", do: %{text: "Bar!"}
-      match "!ping", do: %{text: "Pong!"}
+      match "!foo"  -> %{text: "Bar!"}
+      match "!ping" -> %{text: "Pong!"}
     end
   end
 end
