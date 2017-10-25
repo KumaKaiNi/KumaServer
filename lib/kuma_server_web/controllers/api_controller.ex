@@ -2,7 +2,7 @@ defmodule KumaServerWeb.ApiController do
   use KumaServerWeb, :controller
   use KumaServer.Module
   import KumaServer.Util
-  alias KumaServer.Commands
+  alias KumaServer.{Commands, Request, Response}
 
   @moduledoc """
   API handler for bot commands.
@@ -55,9 +55,34 @@ defmodule KumaServerWeb.ApiController do
   @spec parse(KumaServer.Request.t) :: KumaServer.Response.t | nil
   def parse(data) do
     cond do
-      is_mod() and match ["!command add", "!command edit", "!command set", "!command change"] -> Commands.CustomCommands.custom_command_set(data)
-      is_mod() and match ["!command remove", "!command rem", "!command delete", "!command del"] -> Commands.CustomCommands.custom_command_delete(data)
-      true -> Commands.CustomCommands.custom_command(data)
+      is_mod() and match [
+        "!command add", 
+        "!command edit", 
+        "!command set", 
+        "!command change"
+      ] -> Commands.CustomCommand.set(data)
+      is_mod() and match [
+        "!command remove", 
+        "!command rem", 
+        "!command delete", 
+        "!command del"
+      ] -> Commands.CustomCommand.delete(data)
+      is_mod() and match [
+        "!quote add",
+        "!quote set"
+      ] -> Commands.Quote.add(data)
+      is_mod() and match [
+        "!quote delete", 
+        "!quote del", 
+        "!quote remove", 
+        "!quote rem"
+      ] -> Commands.Quote.delete(data)
+      is_nsfw() and match "!dan" -> Commands.Danbooru.basic(data)
+      is_nsfw() and match "!ecchi" -> Commands.Danbooru.questionable(data)
+      is_nsfw() and match "!lewd" -> Commands.Danbooru.explicit(data)
+      match "!safe" -> Commands.Danbooru.safe(data)
+      match "!quote" -> Commands.Quote.get(data)
+      true -> Commands.CustomCommand.query(data)
     end
   end
 end

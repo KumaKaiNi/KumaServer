@@ -1,12 +1,12 @@
-defmodule KumaServer.Commands.CustomCommands do
+defmodule KumaServer.Commands.CustomCommand do
   import KumaServer.Util
   alias KumaServer.{Request, Response}
 
   @doc """
   Retrieves a custom command.
   """
-  @spec custom_command(Request.t) :: Response.t | nil
-  def custom_command(data) do
+  @spec query(Request.t) :: Response.t | nil
+  def query(data) do
     case query_data(:commands, data.message.text) do
       nil -> nil
       response -> reply %{text: response}
@@ -16,8 +16,8 @@ defmodule KumaServer.Commands.CustomCommands do
   @doc """
   Creates a custom command.
   """
-  @spec custom_command_set(Request.t) :: Response.t | nil
-  def custom_command_set(data) do
+  @spec set(Request.t) :: Response.t | nil
+  def set(data) do
     capture = ~r/^(!command\s[a-z]+)\s(?<command>[A-Za-z0-9]+)\s(?<action>.+)/
 
     case Regex.named_captures(capture, data.message.text) do
@@ -37,8 +37,8 @@ defmodule KumaServer.Commands.CustomCommands do
   @doc """
   Deletes a custom command.
   """
-  @spec custom_command_delete(Request.t) :: Response.t | nil
-  def custom_command_delete(data) do
+  @spec delete(Request.t) :: Response.t | nil
+  def delete(data) do
     capture = ~r/^(!command\s[a-z]+)\s(?<command>[A-Za-z0-9]+)/
 
     case Regex.named_captures(capture, data.message.text) do

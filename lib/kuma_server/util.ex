@@ -35,6 +35,48 @@ defmodule KumaServer.Util do
   end
 
   @doc """
+  Helper to see if a file was last posted.
+  """
+  @spec is_dupe?(atom | String.t, String.t) :: boolean | nil
+  def is_dupe?(source, filename) do
+    file = query_data("dupes", source)
+
+    cond do
+      file == nil ->
+        store_data("dupes", source, filename)
+        false
+      file != filename ->
+        store_data("dupes", source, filename)
+        false
+      file == filename -> true
+      true -> nil
+    end
+  end
+
+  @doc """
+  Checks to see if a url is a link to image.
+  """
+  @spec is_image?(String.t) :: boolean
+  def is_image?(url) do
+    image_types = [".jpg", ".jpeg", ".gif", ".png", ".mp4"]
+    Enum.member?(image_types, Path.extname(url))
+  end
+
+  @doc """
+  Helper to convert a string to title case.
+
+  Optionally accepts `mod` for splitting the string, otherwise will split for spaces.
+  """
+  @spec titlecase(String.t, String.t) :: String.t
+  def titlecase(title, mod \\ " ") do
+    words = title |> String.split(mod)
+
+    for word <- words do
+      word |> String.capitalize
+    end |> Enum.join(" ")
+  end
+
+  @doc """
   Stores data in a dets table.
   """
   @spec store_data(atom | String.t, String.t, any) :: :ok | {:error, any}
