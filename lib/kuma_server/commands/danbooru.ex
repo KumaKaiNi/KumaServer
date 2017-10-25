@@ -28,7 +28,7 @@ defmodule KumaServer.Commands.Danbooru do
 
   @doc """
   Query Danbooru using one tag and `rating:safe`.
-  
+
   Using no tags will search `order:rank`.
   """
   @spec safe(Request.t) :: Response.t
@@ -83,7 +83,7 @@ defmodule KumaServer.Commands.Danbooru do
   Returns text and and image on success.
   """
   @spec response(String.t, String.t) :: map
-  defp response(tag1, tag2) do
+  def response(tag1, tag2) do
     case tag1 do
       "help" -> "https://github.com/KumaKaiNi/KumaServer"
     _ ->
@@ -141,7 +141,7 @@ defmodule KumaServer.Commands.Danbooru do
   If any tag in the blacklist is found, it will instead send a result for a Mouku meme. Returns a random result or "Nothing Found!" if no results.
   """
   @spec query(String.t, String.t) :: {integer, String.t, map} | String.t
-  defp query(tag1, tag2) do
+  def query(tag1, tag2) do
     require Logger
 
     dan = "danbooru.donmai.us"

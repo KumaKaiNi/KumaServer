@@ -52,7 +52,7 @@ defmodule KumaServer.Module do
   @spec is_private :: boolean
   defmacro is_private do
     quote do
-      var!(data).source.channel.private
+      var!(data).channel.private
     end
   end
 
@@ -62,7 +62,7 @@ defmodule KumaServer.Module do
   @spec is_nsfw :: boolean
   defmacro is_nsfw do
     quote do
-      var!(data).source.channel.nsfw
+      var!(data).channel.nsfw
     end
   end
 end
