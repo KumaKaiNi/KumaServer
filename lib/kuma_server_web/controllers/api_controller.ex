@@ -44,6 +44,10 @@ defmodule KumaServerWeb.ApiController do
         conn
         |> send_resp(400, "bad request")
         |> halt()
+      CaseClauseError -> 
+        conn
+        |> send_resp(400, "bad request")
+        |> halt()
       error ->
         IO.inspect error, label: "error"
 
