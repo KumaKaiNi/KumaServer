@@ -33,7 +33,7 @@ defmodule KumaServer.Commands.RPG do
       "[#{x + 1}] #{username} (Level #{level}, #{coins} Coins)"
     end
 
-    case data.source.protocol do
+    case data.protocol do
       "discord" -> 
         reply %{text: "```\n#{top5_strings |> Enum.join("\n")}\n```"}
       "irc" -> reply %{text: top5_strings |> Enum.join(" ")}
