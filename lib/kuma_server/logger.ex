@@ -1,72 +1,72 @@
 defmodule KumaServer.Logger do
   require Logger
 
-  def log(:recv, content) do
-    to_console(:recv, content)
-    to_file(:recv, content)
+  def log(:recv, data) do
+    to_console(:recv, data)
+    to_file(:recv, data)
   end
 
-  def log(:send, content, message) do
-    to_console(:send, content, message)
-    to_file(:send, content, message)
+  def log(:send, data, message) do
+    to_console(:send, data, message)
+    to_file(:send, data, message)
   end
 
-  def to_console(:recv, content) do
+  def to_console(:recv, data) do
     cond do
-      content.channel.private ->
-        Logger.info "[#{content.protocol}] #{if content.guild.name, do: "[" <> content.guild.name <> "] "}[private] #{content.user.name}: #{content.message.text}"
+      data.channel.private ->
+        Logger.info "[#{data.protocol}] #{if data.guild.name, do: "[" <> data.guild.name <> "] "}[private] #{data.user.name}: #{data.message.text}"
       true ->
-        Logger.info "[#{content.protocol}] [#{content.guild.name}] [#{if content.channel.nsfw, do: '!'}\##{content.channel.name}] #{if content.user.moderator, do: '+'}#{content.user.name}: #{content.message.text}"
+        Logger.info "[#{data.protocol}] [#{data.guild.name}] [#{if data.channel.nsfw, do: '!'}\##{data.channel.name}] #{if data.user.moderator, do: '+'}#{data.user.name}: #{data.message.text}"
     end
   end
 
-  def to_console(:send, content, message) do
+  def to_console(:send, data, message) do
     cond do
-      content.channel.private ->
-        Logger.info "[#{content.protocol}] #{if content.guild.name, do: "[" <> content.guild.name <> "] "}[private] kumakaini: #{message}"
+      data.channel.private ->
+        Logger.info "[#{data.protocol}] #{if data.guild.name, do: "[" <> data.guild.name <> "] "}[private] kumakaini: #{message}"
       true ->
-        Logger.info "[#{content.protocol}] [#{content.guild.name}] [#{if content.channel.nsfw, do: '!'}\##{content.channel.name}] +kumakaini: #{message}"
+        Logger.info "[#{data.protocol}] [#{data.guild.name}] [#{if data.channel.nsfw, do: '!'}\##{data.channel.name}] +kumakaini: #{message}"
     end
   end
 
-  def to_file(:recv, content) do
+  def to_file(:recv, data) do
     logfolder = cond do
-      content.channel.private ->
-        "/home/bowan/bots/_log/#{content.protocol}#{if content.guild.name, do: "/" <> content.guild.name}/private"
+      data.channel.private ->
+        "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
       true ->
-        "/home/bowan/bots/_log/#{content.protocol}/#{content.guild.name}"
+        "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
     end
 
     unless File.exists?(logfolder), do: File.mkdir_p(logfolder)
 
     logfile = cond do
-      content.channel.private -> "#{content.user.name}.log"
-      true -> "#{content.channel.name}.log"
+      data.channel.private -> "#{data.user.name}.log"
+      true -> "#{data.channel.name}.log"
     end
 
     time = DateTime.utc_now |> DateTime.to_iso8601
-    logline = "[#{time}] #{if content.user.moderator, do: '+'}#{content.user.name}: #{content.message.text}\n"
+    logline = "[#{time}] #{if data.user.moderator, do: '+'}#{data.user.name}: #{data.message.text}\n"
 
     File.write!("#{logfolder}/#{logfile}", logline, [:append])
   end
 
-  def to_file(:send, content, message) do
+  def to_file(:send, data, message) do
     logfolder = cond do
-      content.channel.private ->
-        "/home/bowan/bots/_log/#{content.protocol}#{if content.guild.name, do: "/" <> content.guild.name}/private"
+      data.channel.private ->
+        "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
       true ->
-        "/home/bowan/bots/_log/#{content.protocol}/#{content.guild.name}"
+        "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
     end
 
     unless File.exists?(logfolder), do: File.mkdir(logfolder)
 
     logfile = cond do
-      content.channel.private -> "#{content.user.name}.log"
-      true -> "#{content.channel.name}.log"
+      data.channel.private -> "#{data.user.name}.log"
+      true -> "#{data.channel.name}.log"
     end
 
     kuma = cond do
-      content.channel.private -> "kumakaini"
+      data.channel.private -> "kumakaini"
       true -> "+kumakaini"
     end
 
