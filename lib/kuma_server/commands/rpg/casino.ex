@@ -13,7 +13,7 @@ defmodule KumaServer.Commands.RPG.Casino do
   """
   @spec slots(Request.t) :: Response.t
   def slots(data) do
-    username = case data.source.protocol do
+    username = case data.protocol do
       "discord" -> query_data(:links, data.user.id)
       "irc" -> data.user.name
     end
