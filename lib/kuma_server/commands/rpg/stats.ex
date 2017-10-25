@@ -7,6 +7,31 @@ defmodule KumaServer.Commands.RPG.Stats do
   """
 
   @doc """
+  Retrieves the user's stats
+  """
+  @spec user_stats(Request.t) :: Response.t
+  def user_stats(data) do
+    username = case data.protocol do
+      "discord" -> query_data(:links, data.user.id)
+      "irc" -> data.user.name
+    end
+
+    case username do
+      nil -> reply %{text: "You need to link your Twitch account. Be sure to DM me `!link <twitch username>` first."}
+      username ->
+        bank = query_data(:bank, username)
+        bank = case bank do
+          nil -> 0
+          bank -> bank
+        end
+
+        {stats, next_lvl_cost} = get_user_stats(username)
+
+        reply %{text: "[#{username}'s Stats] [Level #{stats.level}] [Coins: #{bank}] [Level Up Cost: #{next_lvl_cost}] [Vitality: #{stats.vit}] [Endurance: #{stats.end}] [Strength: #{stats.str}] [Dexterity: #{stats.dex}] [Intelligence: #{stats.int}] [Luck: #{stats.luck}]"}
+    end
+  end
+
+  @doc """
   Command to level up a user.
 
   If no stat is provided, the current level will be given. If the user doesn't have enough coins to level, it will tell them how many they need.
