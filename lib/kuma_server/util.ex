@@ -4,6 +4,18 @@ defmodule KumaServer.Util do
   """
 
   @doc """
+  Simulates 1:n odds.
+  """
+  @spec one_to(integer) :: boolean
+  def one_to(n), do: Enum.random(1..n) <= 1
+  
+  @doc """
+  Simulates n% odds.
+  """
+  @spec percent(integer) :: boolean
+  def percent(n), do: Enum.random(1..100) <= n
+
+  @doc """
   Transforms all keys in a given map from strings to atoms.
   """
   @spec keys_to_atoms(map) :: map
