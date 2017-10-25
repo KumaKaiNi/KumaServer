@@ -78,14 +78,18 @@ defmodule KumaServerWeb.ApiController do
         "!quote rem"
       ] -> Commands.Quote.delete(data)
 
-      is_nsfw() and match "!dan" -> Commands.Danbooru.basic(data)
+      is_nsfw() and match "!dan"   -> Commands.Danbooru.basic(data)
       is_nsfw() and match "!ecchi" -> Commands.Danbooru.questionable(data)
-      is_nsfw() and match "!lewd" -> Commands.Danbooru.explicit(data)
+      is_nsfw() and match "!lewd"  -> Commands.Danbooru.explicit(data)
       is_nsfw() and match [
         "!nhen", 
         "!nhentai", 
         "!doujin"
       ] -> Commands.Lewd.nhentai(data)
+
+      is_private() and match "!coins"  -> Commands.RPG.Bank.coins(data)
+      is_private() and match "!level"  -> Commands.RPG.Stats.level_up(data)
+      is_private() and match "!respec" -> Commands.RPG.Stats.respec(data)
 
       match "!safe" -> Commands.Danbooru.safe(data)
       match "!quote" -> Commands.Quote.get(data)
