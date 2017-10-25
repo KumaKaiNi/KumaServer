@@ -14,9 +14,11 @@ defmodule KumaServerWeb.Router do
 
   def auth(conn, _opts) do
     auth_key = Application.get_env(:kuma_server, :server_auth)
-    case Plug.Conn.get_req_header(conn, "authorization") do
-      [auth_key] -> conn
-      _ -> 
+    auth_header = Plug.Conn.get_req_header(conn, "authorization") |> List.first
+
+    cond do
+      auth_key == auth_header -> conn
+      true -> 
         conn
         |> send_resp(401, "unauthorized")
         |> halt()
