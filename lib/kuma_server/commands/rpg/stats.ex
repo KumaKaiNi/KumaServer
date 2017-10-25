@@ -27,7 +27,11 @@ defmodule KumaServer.Commands.RPG.Stats do
 
         {stats, next_lvl_cost} = get_user_stats(username)
 
-        reply %{text: "[#{username}'s Stats] [Level #{stats.level}] [Coins: #{bank}] [Level Up Cost: #{next_lvl_cost}] [Vitality: #{stats.vit}] [Endurance: #{stats.end}] [Strength: #{stats.str}] [Dexterity: #{stats.dex}] [Intelligence: #{stats.int}] [Luck: #{stats.luck}]"}
+        case data.protocol do
+          "discord" -> reply %{text: "**#{username}'s Stats**\nLevel #{stats.level}, #{bank} coins\n```Level Up Cost: #{next_lvl_cost} coins\n\n[VIT] #{stats.vit} [END] #{stats.end}\n[STR] #{stats.str} [DEX] #{stats.dex}\n[INT] #{stats.int} [LUK] #{stats.luck}\n```"}
+          "irc" ->
+            reply %{text: "[#{username}'s Stats] [Level #{stats.level}] [Coins: #{bank}] [Level Up Cost: #{next_lvl_cost}] [Vitality: #{stats.vit}] [Endurance: #{stats.end}] [Strength: #{stats.str}] [Dexterity: #{stats.dex}] [Intelligence: #{stats.int}] [Luck: #{stats.luck}]"}
+        end
     end
   end
 
