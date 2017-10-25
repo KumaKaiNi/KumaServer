@@ -40,14 +40,6 @@ defmodule KumaServerWeb.ApiController do
           |> json(response)
       end    
     rescue
-      KeyError ->
-        conn
-        |> send_resp(400, "bad request")
-        |> halt()
-      CaseClauseError -> 
-        conn
-        |> send_resp(400, "bad request")
-        |> halt()
       error ->
         IO.inspect error, label: "error"
 
