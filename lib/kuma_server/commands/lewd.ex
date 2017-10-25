@@ -37,7 +37,7 @@ defmodule KumaServer.Commands.Lewd do
 
           artist = case artists do
             [] -> ""
-            artists -> "by #{artists |> Enum.sort |> Enum.join(", ")}\n"
+            artists -> "by #{artists |> Enum.sort |> Enum.join(", ")}"
           end
 
           cover = "https://i.nhentai.net/galleries/#{result.media_id}/1.#{filetype}"

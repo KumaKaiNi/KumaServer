@@ -167,19 +167,28 @@ defmodule KumaServer.Commands.Danbooru do
     safe2 = Enum.member?(blacklist, tag2)
 
     {tag1, tag2} = case {safe1, safe2} do
-      {_, true}       -> {"shangguan_feiying", "meme"}
-      {true, _}       -> {"shangguan_feiying", "meme"}
-      {false, false}  -> {tag1, tag2}
+      {_, true}      -> {"shangguan_feiying", "meme"}
+      {true, _}      -> {"shangguan_feiying", "meme"}
+      {false, false} -> {tag1, tag2}
     end
 
     tag1 = tag1 |> String.split |> Enum.join("_") |> URI.encode_www_form
     tag2 = tag2 |> String.split |> Enum.join("_") |> URI.encode_www_form
 
-    request = "http://#{dan}/posts.json?limit=50&page=1&tags=#{tag1}+#{tag2}" |> HTTPoison.get!
+    request = 
+      "http://#{dan}/posts.json?limit=50&page=1&tags=#{tag1}+#{tag2}" 
+      |> HTTPoison.get!
 
     try do
       results = Poison.Parser.parse!((request.body), keys: :atoms)
-      result = results |> Enum.shuffle |> Enum.find(fn post -> is_image?(post.file_url) == true && is_dupe?("dan", post.file_url) == false && post.is_deleted == false end)
+      result = 
+        results 
+        |> Enum.shuffle 
+        |> Enum.find(fn post -> 
+          is_image?(post.file_url) == true 
+          && is_dupe?("dan", post.file_url) == false 
+          && post.is_deleted == false 
+        end)
 
       post_id = Integer.to_string(result.id)
       image = "http://#{dan}#{result.file_url}"
