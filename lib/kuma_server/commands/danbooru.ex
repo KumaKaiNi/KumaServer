@@ -124,11 +124,27 @@ defmodule KumaServer.Commands.Danbooru do
 
           cond do
             Enum.member?(["jpg", "png", "gif"], extension) ->
-              %{text: "", image: %{url: image, source: "https://danbooru.donmai.us/posts/#{post_id}", description: "#{char} - #{copy}\nDrawn by #{artist}", referrer: "danbooru.donmai.us"}}
+              %{
+                text: "", 
+                image: %{
+                  url: image, 
+                  source: "https://danbooru.donmai.us/posts/#{post_id}", 
+                  description: "#{char} - #{copy}\nDrawn by #{artist}", 
+                  referrer: "danbooru.donmai.us"
+                }
+              }
             true ->
               thumbnail = "http://danbooru.donmai.us#{result.preview_file_url}"
 
-              %{text: "", image: %{url: thumbnail, source: "https://danbooru.donmai.us/posts/#{post_id}", description: "#{char} - #{copy}\nDrawn by #{artist}", referrer: "danbooru.donmai.us (animated)"}}
+              %{
+                text: "", 
+                image: %{
+                  url: thumbnail, 
+                  source: "https://danbooru.donmai.us/posts/#{post_id}", 
+                  description: "#{char} - #{copy}\nDrawn by #{artist}", 
+                  referrer: "danbooru.donmai.us (animated)"
+                }
+              }
           end
         message -> %{text: message}
       end
