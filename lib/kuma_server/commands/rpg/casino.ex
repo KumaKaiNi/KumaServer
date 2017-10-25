@@ -1,6 +1,6 @@
 defmodule KumaServer.Commands.RPG.Casino do
   import KumaServer.Util
-  alias KumaServer.{Request, Response}
+  alias KumaServer.{Commands, Request, Response}
   
   @moduledoc """
   Commands for gambling coins.
@@ -60,7 +60,8 @@ defmodule KumaServer.Commands.RPG.Casino do
 
                         result = case bonus do
                           0 ->
-                            {stats, _} = get_user_stats(username)
+                            {stats, _} = 
+                              Commands.RPG.Stats.get_user_stats(username)
                             odds =
                               1250 * :math.pow(1.02256518256, -1 * stats.luck)
                               |> round
