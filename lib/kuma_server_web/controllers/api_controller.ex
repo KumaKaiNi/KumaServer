@@ -148,7 +148,7 @@ defmodule KumaServerWeb.ApiController do
     case response do
       nil -> nil
       response -> 
-        case response.content do
+        case response.response do
           %{text: text} -> 
             KumaServer.Logger.log(:send, data, text)
           %{text: text, image: image} -> 
