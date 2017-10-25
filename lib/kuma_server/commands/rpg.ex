@@ -34,8 +34,9 @@ defmodule KumaServer.Commands.RPG do
     end
 
     case data.source.protocol do
-      "discord" -> %{text: "```\n#{top5_strings |> Enum.join("\n")}\n```"}
-      "irc" -> %{text: top5_strings |> Enum.join(" ")}
+      "discord" -> 
+        reply %{text: "```\n#{top5_strings |> Enum.join("\n")}\n```"}
+      "irc" -> reply %{text: top5_strings |> Enum.join(" ")}
     end
   end
 end
