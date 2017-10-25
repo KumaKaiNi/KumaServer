@@ -103,6 +103,7 @@ defmodule KumaServerWeb.ApiController do
 
       match "!safe" -> Commands.Danbooru.safe(data)
       match "!quote" -> Commands.Quote.get(data)
+      match "!stats" -> Commands.RPG.Stats.user_stats(data)
 
       true -> Commands.CustomCommand.query(data)
     end
