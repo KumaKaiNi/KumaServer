@@ -92,7 +92,11 @@ defmodule KumaServer.Commands.Danbooru do
           character = result.tag_string_character |> String.split
           copyright = result.tag_string_copyright |> String.split
 
-          artist = result.tag_string_artist |> String.split("_") |> Enum.join(" ")
+          artist = 
+            result.tag_string_artist 
+            |> String.split("_") 
+            |> Enum.join(" ")
+            
           {char, copy} =
             case {length(character), length(copyright)} do
               {2, _} ->

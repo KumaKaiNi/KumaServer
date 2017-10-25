@@ -66,15 +66,15 @@ defmodule KumaServerWeb.ApiController do
   def parse(data) do
     cond do
       is_mod() and match [
-        "!command add", 
-        "!command edit", 
-        "!command set", 
+        "!command add",
+        "!command edit",
+        "!command set",
         "!command change"
       ] -> Commands.CustomCommand.set(data)
       is_mod() and match [
-        "!command remove", 
-        "!command rem", 
-        "!command delete", 
+        "!command remove",
+        "!command rem",
+        "!command delete",
         "!command del"
       ] -> Commands.CustomCommand.delete(data)
       is_mod() and match [
@@ -82,9 +82,9 @@ defmodule KumaServerWeb.ApiController do
         "!quote set"
       ] -> Commands.Quote.add(data)
       is_mod() and match [
-        "!quote delete", 
-        "!quote del", 
-        "!quote remove", 
+        "!quote delete",
+        "!quote del",
+        "!quote remove",
         "!quote rem"
       ] -> Commands.Quote.delete(data)
 
@@ -92,18 +92,20 @@ defmodule KumaServerWeb.ApiController do
       is_nsfw() and match "!ecchi" -> Commands.Danbooru.questionable(data)
       is_nsfw() and match "!lewd"  -> Commands.Danbooru.explicit(data)
       is_nsfw() and match [
-        "!nhen", 
-        "!nhentai", 
+        "!nhen",
+        "!nhentai",
         "!doujin"
       ] -> Commands.Lewd.nhentai(data)
 
       is_private() and match "!coins"  -> Commands.RPG.Bank.coins(data)
+      is_private() and match "!slots"  -> Commands.RPG.Casino.slots(data)
       is_private() and match "!level"  -> Commands.RPG.Stats.level_up(data)
       is_private() and match "!respec" -> Commands.RPG.Stats.respec(data)
 
       match "!safe" -> Commands.Danbooru.safe(data)
       match "!quote" -> Commands.Quote.get(data)
       match "!stats" -> Commands.RPG.Stats.user_stats(data)
+      match "!jackpot" -> Commands.RPG.Casino.jackpot
 
       true -> Commands.CustomCommand.query(data)
     end
