@@ -11,4 +11,4 @@ curl -XPOST \
     "user": {"id": null, "name":"rekyuus", "avatar": null, "moderator": true},
     "message": {"id": null, "text": "'"$2"'", "image": null}
   }' \
-  dev.riichi.me/api
+  kuma.riichi.me/api
