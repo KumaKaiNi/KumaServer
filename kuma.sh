@@ -3,7 +3,7 @@
 
 curl -XPOST \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: "'"$1"'"' \
+  -H 'Authorization: '"$1"'' \
   --data-binary '{
     "protocol": "irc",
     "guild": {"id": null, "name":"console"},
