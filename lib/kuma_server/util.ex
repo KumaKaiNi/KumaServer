@@ -32,10 +32,18 @@ defmodule KumaServer.Util do
 
   @doc """
   Creates a response struct where the reply is true and the map provided is the response.
+
+  Also logs to file.
   """
   @spec reply(map, String.t) :: KumaServer.Response.t
   def reply(map, reason \\ "ok") do
-    struct KumaServer.Response, %{reply: true, response: map, reason: reason}
+    data = 
+      KumaServer.Response
+      |> struct(%{reply: true, response: map, reason: reason})
+
+    KumaServer.Logger.log(:send, data)
+
+    data
   end
 
   @doc """

@@ -64,6 +64,8 @@ defmodule KumaServerWeb.ApiController do
   """
   @spec parse(Request.t) :: Response.t | nil
   def parse(data) do
+    KumaServer.Logger.log(:recv, data)
+
     cond do
       is_mod() and match [
         "!command add",

@@ -44,7 +44,7 @@ defmodule KumaServer.Commands.General do
   @doc """
   Might respond to "same".
   """
-  @spec same :: Response.t
+  @spec same :: Response.t | nil
   def same do
     if one_to(25), do: reply %{text: "same"}
   end
