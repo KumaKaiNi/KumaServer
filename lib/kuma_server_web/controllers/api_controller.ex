@@ -66,7 +66,7 @@ defmodule KumaServerWeb.ApiController do
   def parse(data) do
     KumaServer.Logger.log(:recv, data)
 
-    response = cond do
+    response_data = cond do
       is_mod() and match [
         "!command add",
         "!command edit",
@@ -145,10 +145,10 @@ defmodule KumaServerWeb.ApiController do
       true -> Commands.CustomCommand.query(data)
     end
 
-    case response do
+    case response_data do
       nil -> nil
-      response -> 
-        case response.response do
+      response_data -> 
+        case response_data.response do
           %{text: text, image: image} -> 
             KumaServer.Logger.log(:send, data, "#{image.source} #{text}")
           %{text: text} -> 
@@ -156,6 +156,6 @@ defmodule KumaServerWeb.ApiController do
         end        
     end
 
-    response
+    response_data
   end
 end
