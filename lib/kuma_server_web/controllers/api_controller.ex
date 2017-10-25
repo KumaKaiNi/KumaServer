@@ -149,10 +149,10 @@ defmodule KumaServerWeb.ApiController do
       nil -> nil
       response -> 
         case response.response do
-          %{text: text} -> 
-            KumaServer.Logger.log(:send, data, text)
           %{text: text, image: image} -> 
             KumaServer.Logger.log(:send, data, "#{image.source} #{text}")
+          %{text: text} -> 
+            KumaServer.Logger.log(:send, data, text)
         end        
     end
 
