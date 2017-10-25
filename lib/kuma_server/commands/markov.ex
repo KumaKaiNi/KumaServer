@@ -42,13 +42,13 @@ defmodule KumaServer.Commands.Markov do
     markov_length = case word_count do
       0 ->
         average = round(length(words |> String.split) / length(lines))
-        average + :random.uniform(average)
+        average + :rand.uniform(average)
       count -> count
     end
 
     markov_start = case start_word do
-      nil -> words |> String.split |> Enum.random
-      literally_anything_else -> literally_anything_else
+      nil -> lines |> Enum.random |> String.split |> List.first
+      start_word -> start_word
     end
 
     Dictionary.new

@@ -1,6 +1,6 @@
 defmodule KumaServer.Commands.Markov.Dictionary do
   def new do
-    HashDict.new
+    Keyword.new
   end
 
   def parse(dictionary, source) when is_binary(source) do
@@ -8,12 +8,12 @@ defmodule KumaServer.Commands.Markov.Dictionary do
   end
 
   def parse(dictionary, [word1, word2 | rest]) do
-    value = Dict.get(dictionary, word1, [])
-    dictionary = Dict.put(dictionary, word1, [word2 | value])
+    value = Keyword.get(dictionary, word1, [])
+    dictionary = Keyword.put(dictionary, word1, [word2 | value])
     parse(dictionary, [word2 | rest])
   end
 
   def parse(dictionary, [_single]), do: dictionary
 
-  def next(dictionary, word), do: Dict.get(dictionary, word)
+  def next(dictionary, word), do: Keyword.get(dictionary, word)
 end

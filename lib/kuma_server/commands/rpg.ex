@@ -39,4 +39,3 @@ defmodule KumaServer.Commands.RPG do
     end
   end
 end
-end
