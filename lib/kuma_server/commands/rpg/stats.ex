@@ -83,7 +83,7 @@ defmodule KumaServer.Commands.RPG.Stats do
     case username do
       nil -> reply %{text: "You need to link your Twitch account. Be sure to DM me `!link <twitch username>` first."}
       username -> 
-        {stats, level_up_cost} = get_user_stats(username)
+        {stats, _level_up_cost} = get_user_stats(username)
 
         cond do
           stats.level < 3 -> reply %{text: "You must be level 3 or higher to respec."}
