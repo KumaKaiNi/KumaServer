@@ -145,10 +145,10 @@ defmodule KumaServerWeb.ApiController do
       true -> Commands.CustomCommand.query(data)
     end
 
-    case response.response do
+    case response do
       nil -> nil
-      content -> 
-        case content do
+      response -> 
+        case response.content do
           %{text: text} -> 
             KumaServer.Logger.log(:send, data, text)
           %{text: text, image: image} -> 
