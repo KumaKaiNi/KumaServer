@@ -11,7 +11,7 @@ defmodule KumaServer.Commands.Lewd do
   """
   @spec nhentai(Request.t) :: Response.t
   def nhentai(data) do
-    [_ | tags] = data.content |> String.split
+    [_ | tags] = data.message.text |> String.split
 
     case tags do
       [] -> reply %{text: "You must search with at least one tag."}
