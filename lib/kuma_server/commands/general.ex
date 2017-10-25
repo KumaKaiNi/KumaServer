@@ -1,6 +1,6 @@
 defmodule KumaServer.Commands.General do
   import KumaServer.Util
-  alias KumaServer.{Request, Response}
+  alias KumaServer.Response
   
   @moduledoc """
   General commands.

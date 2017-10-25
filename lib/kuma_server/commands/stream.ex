@@ -1,6 +1,6 @@
 defmodule KumaServer.Commands.Stream do
   import KumaServer.Util
-  alias KumaServer.{Request, Response}
+  alias KumaServer.Response
   
   @moduledoc """
   Commands related to the stream.
