@@ -5,7 +5,7 @@ defmodule KumaServer.Commands.Quote do
   @doc """
   Pulls a random quote, or quote by ID if specified.
   """
-  @spec get(Request.t) :: Reponse.t
+  @spec get(Request.t) :: Response.t
   def get(data) do
     {quote_id, quote_text} = case length(data.message.text |> String.split) do
       1 ->
@@ -32,7 +32,7 @@ defmodule KumaServer.Commands.Quote do
   @doc """
   Adds a quote.
   """
-  @spec add(Request.t) :: Reponse.t
+  @spec add(Request.t) :: Response.t
   def add(data) do
     [_ | quote_text] = data.message.text |> String.split
     quote_text = quote_text |> Enum.join(" ")
@@ -56,7 +56,7 @@ defmodule KumaServer.Commands.Quote do
   @doc """
   Deletes a quote by ID.
   """
-  @spec delete(Request.t) :: Reponse.t
+  @spec delete(Request.t) :: Response.t
   def delete(data) do
     [_ | [quote_id | _]] = data.message.text |> String.split
 

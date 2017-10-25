@@ -27,7 +27,7 @@ defmodule KumaServerWeb.ApiController do
   """
   @spec handle(Plug.Conn.t, map) :: Plug.Conn.t
   def handle(conn, params) do
-    data = struct(KumaServer.Request, keys_to_atoms(params))
+    data = struct(Request, keys_to_atoms(params))
 
     case data.message do
       nil -> 
@@ -52,7 +52,7 @@ defmodule KumaServerWeb.ApiController do
 
   Will return a response if available, with text and/or an image url. Otherwise will return `nil` if nothing matches.
   """
-  @spec parse(KumaServer.Request.t) :: KumaServer.Response.t | nil
+  @spec parse(Request.t) :: Response.t | nil
   def parse(data) do
     cond do
       is_mod() and match [
