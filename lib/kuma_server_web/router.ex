@@ -12,9 +12,10 @@ defmodule KumaServerWeb.Router do
     post "/", ApiController, :handle
   end
 
-  def auth(conn, _opts) do    
+  def auth(conn, _opts) do
+    auth_key = Application.get_env(:kuma_server, :server_auth)
     case Plug.Conn.get_req_header(conn, "authorization") do
-      [Application.get_env(:kuma_server, :server_auth)] -> conn
+      [auth_key] -> conn
       _ -> 
         conn
         |> send_resp(401, "unauthorized")
