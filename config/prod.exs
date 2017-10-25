@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :kuma_server, KumaServerWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 6666],
+  url: [host: "example.com", port: 2685],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production

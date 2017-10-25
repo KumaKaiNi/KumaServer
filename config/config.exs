@@ -15,7 +15,7 @@ config :kuma_server, KumaServerWeb.Endpoint,
 
 # Configures Elixir's Logger
 config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
+  format: "$time $message\n",
   metadata: [:request_id]
 
 # Import environment specific config. This must remain at the bottom
