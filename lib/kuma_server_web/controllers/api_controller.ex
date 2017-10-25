@@ -105,6 +105,8 @@ defmodule KumaServerWeb.ApiController do
       match "!safe"     -> Commands.Danbooru.safe(data)
       match "!help"     -> Commands.General.help
       match "!kuma"     -> Commands.General.ping
+      match "!smug"     -> Commands.Image.smug
+      match "!markov"   -> Commands.Markov.generate
       match "!quote"    -> Commands.Quote.get(data)
       match [
         "!coin$",
@@ -117,11 +119,26 @@ defmodule KumaServerWeb.ApiController do
       ] -> Commands.Random.pick_from_a_list(data)
       match "!predict"  -> Commands.Random.prediction
       match "!roll"     -> Commands.Random.roll_dice(data)
+      match "!top5"     -> Commands.RPG.leaderboard(data)
       match "!jackpot"  -> Commands.RPG.Casino.jackpot
       match "!stats"    -> Commands.RPG.Stats.user_stats(data)
       match "!np"       -> Commands.Stream.now_playing
       match "!time"     -> Commands.Stream.local_time
       match "!uptime"   -> Commands.Stream.uptime
+
+      match [
+        "ty kuma",
+        "thanks kuma",
+        "thank you kuma"
+      ] -> Commands.General.thanks
+      match [
+        "hi$",
+        "hello$",
+        "hey$",
+        "sup$",
+        "hi everyone"
+      ] -> Commands.General.hello
+      match "(S|s)(A|a)(M|m)(E|e)" -> Commands.General.same
 
       true -> Commands.CustomCommand.query(data)
     end
