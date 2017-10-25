@@ -1,4 +1,5 @@
 defmodule KumaServer.Commands.RPG.Stats do
+  import KumaServer.Util
   alias KumaServer.{Request, Response}
 
   @moduledoc """
