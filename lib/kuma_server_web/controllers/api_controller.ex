@@ -23,27 +23,33 @@ defmodule KumaServerWeb.ApiController do
   @doc """
   The handler for HTTP reponses.
 
-  Returns `400 Bad Request` if there is no message, `204 No Content` if there are no matches, or `200 OK` with a JSON response otherwise.
+  Returns `400 Bad Request` if there is invalid content in the parameters, `204 No Content` if there are no matches, or `200 OK` with a JSON response otherwise.
   """
   @spec handle(Plug.Conn.t, map) :: Plug.Conn.t
   def handle(conn, params) do
     data = struct(Request, keys_to_atoms(params))
 
-    case data.message do
-      nil -> 
+    try do
+      case parse(data) do
+        nil ->
+          conn
+          |> send_resp(204, "")
+          |> halt()
+        response ->
+          conn
+          |> json(response)
+      end    
+    rescue
+      KeyError ->
         conn
         |> send_resp(400, "bad request")
         |> halt()
-      _message ->
-        case parse(data) do
-          nil ->
-            conn
-            |> send_resp(204, "")
-            |> halt()
-          response ->
-            conn
-            |> json(response)
-        end
+      error ->
+        IO.inspect error, label: "error"
+
+        conn
+        |> send_resp(500, "internal server error")
+        |> halt()
     end
   end
 
