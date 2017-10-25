@@ -74,12 +74,12 @@ defmodule KumaServer.Commands.RPG.Casino do
                               kuma = query_data(:bank, "kumakaini")
                               store_data(:bank, "kumakaini", kuma + bet)
 
-                              "Sorry, you didn't win anything."
+                              "You didn't win anything."
                             end
                           bonus ->
                             payout = bet * bonus
                             store_data(:bank, username, bank - bet + payout)
-                            "Congrats, you won #{payout} coins!"
+                            "You won #{payout} coins."
                         end
 
                         reply %{text: "#{col1} #{col2} #{col3} (#{result})"}

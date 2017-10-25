@@ -102,10 +102,26 @@ defmodule KumaServerWeb.ApiController do
       is_private() and match "!level"  -> Commands.RPG.Stats.level_up(data)
       is_private() and match "!respec" -> Commands.RPG.Stats.respec(data)
 
-      match "!safe" -> Commands.Danbooru.safe(data)
-      match "!quote" -> Commands.Quote.get(data)
-      match "!stats" -> Commands.RPG.Stats.user_stats(data)
-      match "!jackpot" -> Commands.RPG.Casino.jackpot
+      match "!safe"     -> Commands.Danbooru.safe(data)
+      match "!help"     -> Commands.General.help
+      match "!kuma"     -> Commands.General.ping
+      match "!quote"    -> Commands.Quote.get(data)
+      match [
+        "!coin$",
+        "!flip"
+      ] -> Commands.Random.coin_flip
+      match "!guidance" -> Commands.Random.souls_message
+      match [
+        "!pick",
+        "!choose"
+      ] -> Commands.Random.pick_from_a_list(data)
+      match "!predict"  -> Commands.Random.prediction
+      match "!roll"     -> Commands.Random.roll_dice(data)
+      match "!jackpot"  -> Commands.RPG.Casino.jackpot
+      match "!stats"    -> Commands.RPG.Stats.user_stats(data)
+      match "!np"       -> Commands.Stream.now_playing
+      match "!time"     -> Commands.Stream.local_time
+      match "!uptime"   -> Commands.Stream.uptime
 
       true -> Commands.CustomCommand.query(data)
     end
