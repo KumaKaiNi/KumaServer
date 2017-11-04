@@ -29,7 +29,7 @@ defmodule KumaServerWeb.ApiController do
   def handle(conn, params) do
     data = struct(Request, keys_to_atoms(params))
 
-    try do
+#    try do
       case parse(data) do
         nil ->
           conn
@@ -39,14 +39,14 @@ defmodule KumaServerWeb.ApiController do
           conn
           |> json(response)
       end    
-    rescue
-      error ->
-        IO.inspect error, label: "error"
+#    rescue
+#      error ->
+#        IO.inspect error, label: "error"
 
-        conn
-        |> send_resp(500, "internal server error")
-        |> halt()
-    end
+#        conn
+#        |> send_resp(500, "internal server error")
+#        |> halt()
+#    end
   end
 
   @doc """
