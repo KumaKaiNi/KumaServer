@@ -34,7 +34,10 @@ defmodule KumaServer.Logger do
       data.channel.private ->
         "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
       true ->
-        "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
+        case data.guild.id do
+          nil -> "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
+          guild_id -> "/home/bowan/bots/_log/#{data.protocol}/#{guild_id}"
+        end
     end
 
     unless File.exists?(logfolder), do: File.mkdir_p(logfolder)
@@ -55,7 +58,10 @@ defmodule KumaServer.Logger do
       data.channel.private ->
         "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
       true ->
-        "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
+        case data.guild.id do
+          nil -> "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
+          guild_id -> "/home/bowan/bots/_log/#{data.protocol}/#{guild_id}"
+        end
     end
 
     unless File.exists?(logfolder), do: File.mkdir(logfolder)

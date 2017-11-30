@@ -13,6 +13,10 @@ defmodule KumaServer.Commands.Markov do
   def generate do
     reply %{text: gen_markov("/home/bowan/bots/_log/irc/twitch/rekyuus.log")}
   end
+  
+  def generate_discord do
+    reply %{text: gen_markov("/home/bowan/bots/_log/discord/twitch/rekyuus.log")}
+  end
 
   defp gen_markov(input_file, word_count \\ 0, start_word \\ nil) do
     alias KumaServer.Commands.Markov.{Dictionary, Generator}

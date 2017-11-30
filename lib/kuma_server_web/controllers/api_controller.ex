@@ -96,12 +96,18 @@ defmodule KumaServerWeb.ApiController do
       is_private() and match "!level"  -> Commands.RPG.Stats.level_up(data)
       is_private() and match "!respec" -> Commands.RPG.Stats.respec(data)
 
-      match "!safe"     -> Commands.Danbooru.safe(data)
-      match "!help"     -> Commands.General.help
-      match "!kuma"     -> Commands.General.ping
-      match "!smug"     -> Commands.Image.smug
-      match "!markov"   -> Commands.Markov.generate
-      match "!quote"    -> Commands.Quote.get(data)
+      match "!safe" -> Commands.Danbooru.safe(data)
+      match "!help" -> Commands.General.help
+      match "!kuma" -> Commands.General.ping
+      match "!smug" -> Commands.Image.smug
+      
+      match [
+        "!markov",
+        "!markov twitch"
+      ] -> Commands.Markov.generate
+      match "!markov discord" -> Commands.Markov.generate_discord
+      
+      match "!quote"          -> Commands.Quote.get(data)
       match [
         "!coin$",
         "!flip"
