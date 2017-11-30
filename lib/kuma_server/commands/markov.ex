@@ -32,9 +32,12 @@ defmodule KumaServer.Commands.Markov do
           unless username == "kumakaini" do
             ((for word <- capture |> String.split do
               cond do
-                Regex.match?(~r/http/) -> nil
-                Regex.match?(~r/\..{1,}(\s|\n)/) -> nil
-                Regex.match?(~r/<:.+:\d{18}>/) -> nil
+                Regex.match?(~r/http/, word) -> nil
+                Regex.match?(~r/\..{1,}(\s|\n)/, word) -> nil
+                Regex.match?(~r/<:.+:\d{18}>/, word) ->
+                  cap = Regex.named_captures(~r/<:(?<emote>.+):\d{18}>/, word)
+                  cap["emote"]
+                true -> word
               end
             end |> Enum.uniq) -- [nil]) |> Enum.join
           end
