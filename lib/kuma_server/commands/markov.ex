@@ -39,7 +39,7 @@ defmodule KumaServer.Commands.Markov do
                   cap["emote"]
                 true -> word
               end
-            end |> Enum.uniq) -- [nil]) |> Enum.join
+            end |> Enum.uniq) -- [nil]) |> Enum.join(" ")
           end
       end
     end |> Enum.uniq) -- [nil, ""]
