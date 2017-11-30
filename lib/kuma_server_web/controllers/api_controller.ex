@@ -102,7 +102,7 @@ defmodule KumaServerWeb.ApiController do
       match "!smug" -> Commands.Image.smug
       
       match [
-        "!markov",
+        "!markov$",
         "!markov twitch"
       ] -> Commands.Markov.generate
       match "!markov discord" -> Commands.Markov.generate_discord
