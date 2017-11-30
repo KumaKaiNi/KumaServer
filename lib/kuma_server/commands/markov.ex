@@ -35,6 +35,7 @@ defmodule KumaServer.Commands.Markov do
             case ignore? do
               "http" -> nil
               "https" -> nil
+              "<" -> nil
               capture -> unless capture |> String.first == "!", do: capture
             end
           end
