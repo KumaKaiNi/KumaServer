@@ -15,7 +15,7 @@ defmodule KumaServer.Commands.Markov do
   end
   
   def generate_discord do
-    reply %{text: gen_markov("/home/bowan/bots/_log/discord/214268737887404042/galley.log")}
+    reply %{text: gen_markov("/home/bowan/bots/_log/discord/214268737887404042/214268737887404042.log")}
   end
 
   defp gen_markov(input_file, word_count \\ 0, start_word \\ nil) do
