@@ -30,22 +30,8 @@ defmodule KumaServer.Logger do
   end
 
   def to_file(:recv, data) do
-    logfolder = cond do
-      data.channel.private ->
-        "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
-      true ->
-        case data.guild.id do
-          nil -> "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
-          guild_id -> "/home/bowan/bots/_log/#{data.protocol}/#{guild_id}"
-        end
-    end
-
+    {logfolder, logfile} = get_log_folder_and_file(data)
     unless File.exists?(logfolder), do: File.mkdir_p(logfolder)
-
-    logfile = cond do
-      data.channel.private -> "#{data.user.name}.log"
-      true -> "#{data.channel.name}.log"
-    end
 
     time = DateTime.utc_now |> DateTime.to_iso8601
     logline = "[#{time}] #{if data.user.moderator, do: '+'}#{data.user.name}: #{data.message.text}\n"
@@ -54,22 +40,8 @@ defmodule KumaServer.Logger do
   end
 
   def to_file(:send, data, message) do
-    logfolder = cond do
-      data.channel.private ->
-        "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
-      true ->
-        case data.guild.id do
-          nil -> "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
-          guild_id -> "/home/bowan/bots/_log/#{data.protocol}/#{guild_id}"
-        end
-    end
-
+    {logfolder, logfile} = get_log_folder_and_file(data)
     unless File.exists?(logfolder), do: File.mkdir(logfolder)
-
-    logfile = cond do
-      data.channel.private -> "#{data.user.name}.log"
-      true -> "#{data.channel.name}.log"
-    end
 
     kuma = cond do
       data.channel.private -> "kumakaini"
@@ -80,5 +52,30 @@ defmodule KumaServer.Logger do
     logline = "[#{time}] #{kuma}: #{message}\n"
 
     File.write!("#{logfolder}/#{logfile}", logline, [:append])
+  end
+  
+  defp get_log_folder_and_file(data) do
+    logfolder = cond do
+      data.channel.private ->
+        "/home/bowan/bots/_log/#{data.protocol}#{if data.guild.name, do: "/" <> data.guild.name}/private"
+      true ->
+        case data.protocol do
+          "discord" -> 
+            "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.id}"
+          "irc" -> 
+            "/home/bowan/bots/_log/#{data.protocol}/#{data.guild.name}"
+        end
+    end
+
+    logfile = cond do
+      data.channel.private -> "#{data.user.name}.log"
+      true -> 
+        case data.protocol do
+          "discord" -> "#{data.channel.id}.log"
+          "irc"     -> "#{data.channel.name}.log"
+        end
+    end
+    
+    {logfolder, logfile}
   end
 end
