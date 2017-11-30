@@ -30,17 +30,16 @@ defmodule KumaServer.Commands.Markov do
         nil -> nil
         %{"username" => username, "capture" => capture} ->
           unless username == "kumakaini" do
-            ignore? = capture |> String.split(":") |> List.first
-
-            case ignore? do
-              "http" -> nil
-              "https" -> nil
-              "<" -> nil
-              capture -> unless capture |> String.first == "!", do: capture
-            end
+            ((for word <- capture |> String.split do
+              cond do
+                Regex.match?(~r/http/) -> nil
+                Regex.match?(~r/\..{1,}(\s|\n)/) -> nil
+                Regex.match?(~r/<:.+:\d{18}>/) -> nil
+              end
+            end |> Enum.uniq) -- [nil]) |> Enum.join
           end
       end
-    end |> Enum.uniq) -- [nil]
+    end |> Enum.uniq) -- [nil, ""]
 
     words = lines |> Enum.join(" ")
 
