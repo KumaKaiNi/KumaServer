@@ -165,7 +165,7 @@ defmodule KumaServer.Commands.Danbooru do
     require Logger
 
     dan = "danbooru.donmai.us"
-    blacklist = ["what", "scat", "guro", "gore", "loli", "shota"]
+    blacklist = ["what", "scat", "guro", "gore", "loli", "shota", "azur_lane"]
 
     safe1 = Enum.member?(blacklist, tag1)
     safe2 = Enum.member?(blacklist, tag2)
