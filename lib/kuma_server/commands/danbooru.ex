@@ -181,7 +181,13 @@ defmodule KumaServer.Commands.Danbooru do
     {tag1, tag2} = case {safe1, safe2} do
       {_, true}      -> {"shangguan_feiying", "meme"}
       {true, _}      -> {"shangguan_feiying", "meme"}
-      {false, false} -> {tag1, tag2}
+      {false, false} -> case {tag1, tag2} do
+        {"rating:e", "kanna_kamui"} -> {"shangguan_feiying", "meme"}
+        {"rating:q", "kanna_kamui"} -> {"shangguan_feiying", "meme"}
+        {"kanna_kamui", "rating:e"} -> {"shangguan_feiying", "meme"}
+        {"kanna_kamui", "rating:q"} -> {"shangguan_feiying", "meme"}
+        _                           -> {tag1, tag2}
+      end
     end
 
     tag1 = tag1 |> String.split |> Enum.join("_") |> URI.encode_www_form
