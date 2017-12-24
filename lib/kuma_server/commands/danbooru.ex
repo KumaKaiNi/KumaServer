@@ -167,8 +167,13 @@ defmodule KumaServer.Commands.Danbooru do
     dan = "danbooru.donmai.us"
     blacklist = ["what", "scat", "guro", "gore", "loli", "shota"]
 
-    tag1 = tag1 |> String.replace("azur_lane", "kantai_collection")
-    tag2 = tag2 |> String.replace("azur_lane", "kantai_collection")
+    tag1 = tag1 
+    |> String.replace("azur_lane", "kantai_collection")
+    |> String.replace("atz", "kurumizawa_satanichia_mcdowell")
+    
+    tag2 = tag2 
+    |> String.replace("azur_lane", "kantai_collection")
+    |> String.replace("atz", "kurumizawa_satanichia_mcdowell")
 
     safe1 = Enum.member?(blacklist, tag1)
     safe2 = Enum.member?(blacklist, tag2)
