@@ -102,4 +102,13 @@ defmodule KumaServer.Commands.Random do
 
     reply %{text: "#{response.message}"}
   end
+  
+  @doc """
+  Random GDQ message using https://taskinoz.com/gdq/
+  """
+  @spec gdq :: Response.t
+  def gdq do
+    request = "http://taskinoz.com/gdq/api/" |> HTTPoison.get!
+    reply %{text: "#{request.body}"}
+  end
 end

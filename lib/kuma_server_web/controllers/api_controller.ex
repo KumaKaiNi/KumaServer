@@ -119,6 +119,7 @@ defmodule KumaServerWeb.ApiController do
       ] -> Commands.Random.pick_from_a_list(data)
       match "!predict"  -> Commands.Random.prediction
       match "!roll"     -> Commands.Random.roll_dice(data)
+      match "!gdq"      -> Commands.Random.gdq
       match "!top5"     -> Commands.RPG.leaderboard(data)
       match "!jackpot"  -> Commands.RPG.Casino.jackpot
       match "!stats"    -> Commands.RPG.Stats.user_stats(data)
