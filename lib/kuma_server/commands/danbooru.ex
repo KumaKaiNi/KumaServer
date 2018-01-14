@@ -165,7 +165,7 @@ defmodule KumaServer.Commands.Danbooru do
     require Logger
 
     dan = "danbooru.donmai.us"
-    blacklist = ["what", "scat", "guro", "gore", "loli", "shota", "prison"]
+    blacklist = ["what", "scat", "guro", "gore", "loli", "shota", "prison", "furry"]
 
     tag1 = tag1 
     |> String.replace("azur_lane", "kantai_collection")
