@@ -19,7 +19,10 @@ defmodule KumaServer.Commands.Random do
   """
   @spec pick_from_a_list(Request.t) :: Response.t
   def pick_from_a_list(data) do
-    [_ | choices] = data.message.text |> String.split
+    [_ | raw_choices] = data.message.text |> String.split
+    choices = for choice <- raw_choices do
+      String.replace(choice, "/", "")
+    end
 
     case choices do
       [] -> nil
