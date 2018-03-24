@@ -1,5 +1,6 @@
 defmodule KumaServer.Commands.Danbooru do
   import KumaServer.Util
+  require Logger
   alias KumaServer.{Request, Response}
 
   @moduledoc """
@@ -13,17 +14,14 @@ defmodule KumaServer.Commands.Danbooru do
   """
   @spec basic(Request.t) :: Response.t
   def basic(data) do
-    {tag1, tag2} = case length(data.message.text |> String.split) do
-      1 -> {"order:rank", ""}
-      2 ->
-        [_ | [tag1 | _]] = data.message.text |> String.split
-        {tag1, ""}
+    request_tags = case length(data.message.text |> String.split) do
+      1 -> ["order:rank"]
       _ ->
-        [_ | [tag1 | [tag2 | _]]] = data.message.text |> String.split
-        {tag1, tag2}
+        [_ | tags] = data.message.text |> String.split
+        tags
     end
 
-    reply response(tag1, tag2)
+    reply response(request_tags)
   end
 
   @doc """
@@ -33,14 +31,14 @@ defmodule KumaServer.Commands.Danbooru do
   """
   @spec safe(Request.t) :: Response.t
   def safe(data) do
-    {tag1, tag2} = case length(data.message.text |> String.split) do
-      1 -> {"order:rank", "rating:s"}
+    request_tags = case length(data.message.text |> String.split) do
+      1 -> ["order:rank", "rating:s"]
       _ ->
-        [_ | [tag1 | _]] = data.message.text |> String.split
-        {tag1, "rating:s"}
+        [_ | tags] = data.message.text |> String.split
+        ["rating:s"] ++ tags
     end
 
-    reply response(tag1, tag2)
+    reply response(request_tags)
   end
 
   @doc """
@@ -50,14 +48,14 @@ defmodule KumaServer.Commands.Danbooru do
   """
   @spec questionable(Request.t) :: Response.t
   def questionable(data) do
-    {tag1, tag2} = case length(data.message.text |> String.split) do
-      1 -> {"order:rank", "rating:q"}
+    request_tags = case length(data.message.text |> String.split) do
+      1 -> ["order:rank", "rating:q"]
       _ ->
-        [_ | [tag1 | _]] = data.message.text |> String.split
-        {tag1, "rating:q"}
+        [_ | tags] = data.message.text |> String.split
+        ["rating:q"] ++ tags
     end
 
-    reply response(tag1, tag2)
+    reply response(request_tags)
   end
 
   @doc """
@@ -67,36 +65,36 @@ defmodule KumaServer.Commands.Danbooru do
   """
   @spec explicit(Request.t) :: Response.t
   def explicit(data) do
-    {tag1, tag2} = case length(data.message.text |> String.split) do
-      1 -> {"order:rank", "rating:e"}
+    request_tags = case length(data.message.text |> String.split) do
+      1 -> ["order:rank", "rating:e"]
       _ ->
-        [_ | [tag1 | _]] = data.message.text |> String.split
-        {tag1, "rating:e"}
+        [_ | tags] = data.message.text |> String.split
+        ["rating:e"] ++ tags
     end
 
-    reply response(tag1, tag2)
+    reply response(request_tags)
   end
 
   @doc """
-  This function creates a response from two tags. 
+  This function creates a response from two tags.
 
   Returns text and and image on success.
   """
-  @spec response(String.t, String.t) :: map
-  def response(tag1, tag2) do
-    case tag1 do
+  @spec response(list) :: map
+  def response(tags) do
+    case tags |> Enum.member?("help") do
       "help" -> "https://github.com/KumaKaiNi/KumaServer"
     _ ->
-      case query(tag1, tag2) do
+      case query(tags) do
         {post_id, image, result} ->
           character = result.tag_string_character |> String.split
           copyright = result.tag_string_copyright |> String.split
 
-          artist = 
-            result.tag_string_artist 
-            |> String.split("_") 
+          artist =
+            result.tag_string_artist
+            |> String.split("_")
             |> Enum.join(" ")
-            
+
           {char, copy} =
             case {length(character), length(copyright)} do
               {2, _} ->
@@ -129,11 +127,11 @@ defmodule KumaServer.Commands.Danbooru do
           cond do
             Enum.member?(["jpg", "png", "gif"], extension) ->
               %{
-                text: "", 
+                text: "",
                 image: %{
-                  url: image, 
-                  source: "https://danbooru.donmai.us/posts/#{post_id}", 
-                  description: "#{char} - #{copy}\nDrawn by #{artist}", 
+                  url: image,
+                  source: "https://danbooru.donmai.us/posts/#{post_id}",
+                  description: "#{char} - #{copy}\nDrawn by #{artist}",
                   referrer: "danbooru.donmai.us"
                 }
               }
@@ -141,11 +139,11 @@ defmodule KumaServer.Commands.Danbooru do
               thumbnail = "http://danbooru.donmai.us#{result.preview_file_url}"
 
               %{
-                text: "", 
+                text: "",
                 image: %{
-                  url: thumbnail, 
-                  source: "https://danbooru.donmai.us/posts/#{post_id}", 
-                  description: "#{char} - #{copy}\nDrawn by #{artist}", 
+                  url: thumbnail,
+                  source: "https://danbooru.donmai.us/posts/#{post_id}",
+                  description: "#{char} - #{copy}\nDrawn by #{artist}",
                   referrer: "danbooru.donmai.us (animated)"
                 }
               }
@@ -156,60 +154,62 @@ defmodule KumaServer.Commands.Danbooru do
   end
 
   @doc """
-  This function queries danbooru using two tags. 
+  This function queries danbooru using two tags.
 
   If any tag in the blacklist is found, it will instead send a result for a Mouku meme. Returns a random result or "Nothing Found!" if no results.
   """
-  @spec query(String.t, String.t) :: {integer, String.t, map} | String.t
-  def query(tag1, tag2) do
-    require Logger
-
-    dan = "danbooru.donmai.us"
+  @spec query(list) :: map | String.t
+  def query(raw_tags) do
+    # TODO: Add to blacklist command
+    # List of blacklisted words to return a meme instead
+    #blacklist = query_data(:danbooru, :blacklist)
     blacklist = ["what", "scat", "guro", "gore", "loli", "shota", "prison", "furry"]
+    # TODO: Add to replacements command
+    # Map of word => replacement
+    #replacements = query_data(:danbooru, :replacements)
 
-    tag1 = tag1 
-    |> String.replace("azur_lane", "kantai_collection")
-    |> String.replace("atz", "kurumizawa_satanichia_mcdowell")
-    
-    tag2 = tag2 
-    |> String.replace("azur_lane", "kantai_collection")
-    |> String.replace("atz", "kurumizawa_satanichia_mcdowell")
-
-    safe1 = Enum.member?(blacklist, tag1)
-    safe2 = Enum.member?(blacklist, tag2)
-
-    {tag1, tag2} = case {safe1, safe2} do
-      {_, true}      -> {"shangguan_feiying", "meme"}
-      {true, _}      -> {"shangguan_feiying", "meme"}
-      {false, false} -> case {tag1, tag2} do
-        {"rating:e", "kanna_kamui"} -> {"shangguan_feiying", "meme"}
-        {"rating:q", "kanna_kamui"} -> {"shangguan_feiying", "meme"}
-        {"kanna_kamui", "rating:e"} -> {"shangguan_feiying", "meme"}
-        {"kanna_kamui", "rating:q"} -> {"shangguan_feiying", "meme"}
-        _                           -> {tag1, tag2}
+    processed_tags = for tag <- raw_tags do
+      cond do
+        tag == "azur_lane" -> "kantai_collection"
+        tag == "atz"       -> "kurumizawa_satanichia_mcdowell"
+        Enum.member?(blacklist, tag) -> false
+        true -> tag
       end
     end
 
-    tag1 = tag1 |> String.split |> Enum.join("_") |> URI.encode_www_form
-    tag2 = tag2 |> String.split |> Enum.join("_") |> URI.encode_www_form
+    tags = cond do
+      Enum.member?(processed_tags, false) -> ["shangguan_feiying", "meme"]
+      true -> for tag <- processed_tags do
+        tag |> URI.encode_www_form
+      end
+    end
 
-    request = 
-      "http://#{dan}/posts.json?limit=50&page=1&tags=#{tag1}+#{tag2}" 
-      |> HTTPoison.get!
+    request_tags = tags |> Enum.take(6) |> Enum.join("+")
+    request_url = "https://danbooru.donmai.us/posts.json?limit=50&page=1&random=true&tags=#{request_tags}"
+    request_auth = [hackney: [basic_auth: {
+      Application.get_env(:kuma_server, :danbooru_login),
+      Application.get_env(:kuma_server, :danbooru_api_key)
+    }]]
+
+    request = request_url |> HTTPoison.get!(%{}, request_auth)
 
     try do
       results = Poison.Parser.parse!((request.body), keys: :atoms)
-      result = 
-        results 
-        |> Enum.shuffle 
-        |> Enum.find(fn post -> 
-          is_image?(post.file_url) == true 
-          && is_dupe?("dan", post.file_url) == false 
-          && post.is_deleted == false 
-        end)
+      result = results
+      |> Enum.shuffle
+      |> Enum.find(fn post ->
+        is_image?(post.file_url) == true
+        && is_dupe?(:dan, post.file_url) == false
+        && post.is_deleted == false
+      end)
 
       post_id = Integer.to_string(result.id)
-      image = "http://#{dan}#{result.file_url}"
+
+      image = if URI.parse(result.file_url).host do
+        result.file_url
+      else
+        "http://danbooru.donmai.us#{result.file_url}"
+      end
 
       {post_id, image, result}
     rescue
