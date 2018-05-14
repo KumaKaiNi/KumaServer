@@ -71,7 +71,7 @@ defmodule KumaServer.Commands.General do
     julian_date = c + d + e + f - 1524.5
     days_since_new_moon = Kernel.trunc(julian_date - 2451549.5)
     new_moons = days_since_new_moon / cycle_length
-    Kernel.trunc((new_moons - Kernel.trunc(new_moons)) * cycle_length)
+    d = Kernel.trunc((new_moons - Kernel.trunc(new_moons)) * cycle_length)
     
     phase = cond do
       d == 29 -> "New Moon"
