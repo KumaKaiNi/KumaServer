@@ -85,7 +85,7 @@ defmodule KumaServer.Commands.General do
       d ==  1 -> "New Moon"
       d ==  0 -> "N̸̛̹̩͈͖̭̤͚̠̘̝̮͓͈̻̾̈̋̇͊̀̔̚͠͝e̷̡̧̼̩̰̼̞̖͙̮̙̰̳͑̇̑̽͆͆̇̍͘͠w̷̞̦̪̑̎̆̒ ̸̛̩͇̹̯̠̊͆̊Ḿ̵̲͕͔̼̘͙͍͇ͅơ̷̧̙͈͍̻̯̬͔̈́̐̂͌̏̚͘͜o̴̢͕̫̱̪̬̤̱̳͈̩̤̐̈͋̎̅́̿̏̊̕n̶̰̼̯̼͇͕̥̭̞̖͖̾̎́̄͆͂͋̽͌ͅ"
     end
-  end
   
-  %{text: phase}
+    %{text: phase}
+  end
 end
