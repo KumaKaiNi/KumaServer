@@ -99,6 +99,8 @@ defmodule KumaServerWeb.ApiController do
 
       match "!help" -> Commands.General.help
       match "!kuma" -> Commands.General.ping
+      match "!moon" -> Commands.General.moon
+      
       match "!smug" -> Commands.Image.smug
       
       match [
