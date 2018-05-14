@@ -73,7 +73,7 @@ defmodule KumaServer.Commands.General do
     new_moons = days_since_new_moon / cycle_length
     Kernel.trunc((new_moons - Kernel.trunc(new_moons)) * cycle_length)
     
-    cond do
+    phase = cond do
       d == 29 -> "New Moon"
       d >= 23 -> "Waning Crescent"
       d == 22 -> "Last Quarter"
@@ -86,4 +86,6 @@ defmodule KumaServer.Commands.General do
       d ==  0 -> "N̸̛̹̩͈͖̭̤͚̠̘̝̮͓͈̻̾̈̋̇͊̀̔̚͠͝e̷̡̧̼̩̰̼̞̖͙̮̙̰̳͑̇̑̽͆͆̇̍͘͠w̷̞̦̪̑̎̆̒ ̸̛̩͇̹̯̠̊͆̊Ḿ̵̲͕͔̼̘͙͍͇ͅơ̷̧̙͈͍̻̯̬͔̈́̐̂͌̏̚͘͜o̴̢͕̫̱̪̬̤̱̳͈̩̤̐̈͋̎̅́̿̏̊̕n̶̰̼̯̼͇͕̥̭̞̖͖̾̎́̄͆͂͋̽͌ͅ"
     end
   end
+  
+  %{text: phase}
 end
