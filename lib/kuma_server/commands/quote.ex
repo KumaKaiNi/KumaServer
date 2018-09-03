@@ -58,9 +58,9 @@ defmodule KumaServer.Commands.Quote do
   """
   @spec delete(Request.t) :: Response.t
   def delete(data) do
-    [_ | [quote_id | _]] = data.message.text |> String.split
+    [_ | [_ | quote_id]] = data.message.text |> String.split
 
-    case quote_id |> Integer.parse do
+    case List.first(quote_id) |> Integer.parse do
       {quote_id, _} ->
         case query_data(:quotes, quote_id) do
           nil -> reply %{text: "Quote #{quote_id} does not exist."}
