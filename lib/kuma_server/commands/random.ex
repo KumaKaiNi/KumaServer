@@ -1,11 +1,11 @@
 defmodule KumaServer.Commands.Random do
   import KumaServer.Util
   alias KumaServer.{Request, Response}
-  
+
   @moduledoc """
   Commands centered around randomness.
   """
-  
+
   @doc """
   Flips a coin.
   """
@@ -13,7 +13,7 @@ defmodule KumaServer.Commands.Random do
   def coin_flip do
     reply %{text: Enum.random(["Heads.", "Tails."])}
   end
-  
+
   @doc """
   Picks a random item from a given list.
   """
@@ -34,7 +34,7 @@ defmodule KumaServer.Commands.Random do
         end
     end
   end
-  
+
   @doc """
   Rolls a d6, or a series of dice if provided.
   """
@@ -63,7 +63,7 @@ defmodule KumaServer.Commands.Random do
         end
     end
   end
-  
+
   @doc """
   8-ball prediction
   """
@@ -94,7 +94,7 @@ defmodule KumaServer.Commands.Random do
 
     reply %{text: Enum.random(predictions)}
   end
-  
+
   @doc """
   Randomized Dark Souls message
   """
@@ -105,13 +105,13 @@ defmodule KumaServer.Commands.Random do
 
     reply %{text: "#{response.message}"}
   end
-  
+
   @doc """
   Random GDQ message using https://taskinoz.com/gdq/
   """
   @spec gdq :: Response.t
   def gdq do
-    request = "http://taskinoz.com/gdq/api/" |> HTTPoison.get!
+    request = "https://taskinoz.com/gdq/api/" |> HTTPoison.get!
     reply %{text: "#{request.body}"}
   end
 end
