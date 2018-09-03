@@ -59,8 +59,8 @@ defmodule KumaServer.Commands.CustomCommand do
   @doc """
   Lists all custom commands.
   """
-  @spec all_commands(Request.t) :: Response.t | nil
-  def all_commands(data) do
+  @spec list_all_commands(Request.t) :: Response.t | nil
+  def list_all_commands(data) do
     commands_db = query_all_data :commands
 
     commands_list = for entry <- commands_db do
