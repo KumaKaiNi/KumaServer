@@ -55,4 +55,19 @@ defmodule KumaServer.Commands.CustomCommand do
       _ -> nil
     end
   end
+
+  @doc """
+  Lists all custom commands.
+  """
+  @spec all_commands(Request.t) :: Response.t | nil
+  def all_commands(data) do
+    commands_db = query_all_data :commands
+
+    commands_list = for entry <- commands_db do
+      {command, _} = entry
+      command
+    end
+
+    reply %{text: commands_list |> Enum.join(", ")}
+  end
 end
