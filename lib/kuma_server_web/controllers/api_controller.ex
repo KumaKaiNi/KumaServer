@@ -63,6 +63,7 @@ defmodule KumaServerWeb.ApiController do
         "!command add",
         "!command edit",
         "!command set",
+        "!command update",
         "!command change"
       ] -> Commands.CustomCommand.set(data)
       is_mod() and match [

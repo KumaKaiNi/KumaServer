@@ -34,7 +34,7 @@ defmodule KumaServer.Commands.Quote do
   """
   @spec add(Request.t) :: Response.t
   def add(data) do
-    [_ | quote_text] = data.message.text |> String.split
+    [_ | [_ | quote_text]] = data.message.text |> String.split
     quote_text = quote_text |> Enum.join(" ")
 
     quotes = case query_all_data(:quotes) do
