@@ -32,7 +32,7 @@ defmodule KumaServer.Commands.Danbooru do
   @spec safe(Request.t) :: Response.t
   def safe(data) do
     request_tags = case length(data.message.text |> String.split) do
-      1 -> ["order:rank", "rating:s"]
+      1 -> ["order:rank", "rating:s", "-loli", "-goblin_slayer!"]
       _ ->
         [_ | tags] = data.message.text |> String.split
         ["rating:s"] ++ tags
@@ -49,7 +49,7 @@ defmodule KumaServer.Commands.Danbooru do
   @spec questionable(Request.t) :: Response.t
   def questionable(data) do
     request_tags = case length(data.message.text |> String.split) do
-      1 -> ["order:rank", "rating:q"]
+      1 -> ["order:rank", "rating:q", "-loli", "-goblin_slayer!"]
       _ ->
         [_ | tags] = data.message.text |> String.split
         ["rating:q"] ++ tags
@@ -66,7 +66,7 @@ defmodule KumaServer.Commands.Danbooru do
   @spec explicit(Request.t) :: Response.t
   def explicit(data) do
     request_tags = case length(data.message.text |> String.split) do
-      1 -> ["order:rank", "rating:e"]
+      1 -> ["order:rank", "rating:e", "-loli", "-goblin_slayer!"]
       _ ->
         [_ | tags] = data.message.text |> String.split
         ["rating:e"] ++ tags
@@ -163,7 +163,7 @@ defmodule KumaServer.Commands.Danbooru do
     # TODO: Add to blacklist command
     # List of blacklisted words to return a meme instead
     #blacklist = query_data(:danbooru, :blacklist)
-    blacklist = ["what", "scat", "guro", "gore", "loli", "shota", "prison", "furry"]
+    blacklist = ["what", "scat", "guro", "gore", "loli", "shota", "prison", "furry", "goblin_slayer!"]
     # TODO: Add to replacements command
     # Map of word => replacement
     #replacements = query_data(:danbooru, :replacements)
