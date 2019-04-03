@@ -87,11 +87,6 @@ defmodule KumaServerWeb.ApiController do
       is_nsfw() and match "!dan"   -> Commands.Danbooru.basic(data)
       is_nsfw() and match "!ecchi" -> Commands.Danbooru.questionable(data)
       is_nsfw() and match "!lewd"  -> Commands.Danbooru.explicit(data)
-      is_nsfw() and match [
-        "!nhen",
-        "!nhentai",
-        "!doujin"
-      ] -> Commands.Lewd.nhentai(data)
 
       is_private() and match "!coins"  -> Commands.RPG.Bank.coins(data)
       is_private() and match "!slots"  -> Commands.RPG.Casino.slots(data)
