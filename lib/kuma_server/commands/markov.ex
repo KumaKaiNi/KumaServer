@@ -85,7 +85,6 @@ defmodule KumaServer.Commands.Markov do
   @doc """
   Main command handler.
   """
-  @spec generate :: Response.t
   def markov do
     reply %{text: gen_markov("/home/bowan/bots/_log/irc/twitch/rekyuus.log")}
   end
