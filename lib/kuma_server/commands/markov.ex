@@ -35,7 +35,7 @@ defmodule KumaServer.Commands.Markov do
   Generates Markov chains with provided dictionary and starting word.
   """
   def generate(dictionary, word) do
-    next_possible_words = Util.delete_all(dictionary[word], "\n")
+    next_possible_words = delete_all(dictionary[word], "\n")
 
     case next_possible_words do
       [] -> word
@@ -64,7 +64,7 @@ defmodule KumaServer.Commands.Markov do
   """
   def get_start_word(dictionary, lines) do
     start_word = lines |> Enum.random |> String.split |> List.first
-    next_possible_words = Util.delete_all(dictionary[start_word], "\n")
+    next_possible_words = delete_all(dictionary[start_word], "\n")
 
     case next_possible_words do
       nil -> get_start_word(dictionary, lines)
