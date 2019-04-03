@@ -120,7 +120,7 @@ defmodule KumaServer.Commands.Markov do
               end |> Enum.join(" ")
           end
       end
-    end |> Enum.uniq) -- [nil]
+    end |> delete_all(nil)
 
     create_markov(lines)
   end
