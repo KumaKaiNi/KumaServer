@@ -108,8 +108,8 @@ defmodule KumaServerWeb.ApiController do
       match [
         "!markov$",
         "!markov twitch"
-      ] -> Commands.Markov.generate
-      match "!markov discord" -> Commands.Markov.generate_discord
+      ] -> Commands.Markov.markov
+      match "!markov discord" -> Commands.Markov.markov_discord
       
       match "!quote"          -> Commands.Quote.get(data)
       match [

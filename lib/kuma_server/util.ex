@@ -152,4 +152,22 @@ defmodule KumaServer.Util do
     :dets.close(table)    
     response
   end
+
+  @doc """
+  Deletes all entries of a given element from a list.
+  """
+  def delete_all(list, el) do
+    delete_all(list, el, [])
+    |> Enum.reverse
+  end
+ 
+  def delete_all([head | tail], el, new_list) when head === el do
+    delete_all(tail, el, new_list)
+  end
+
+  def delete_all([head | tail], el, new_list) do 
+    delete_all(tail, el, [head | new_list])
+  end
+
+  def delete_all([], _el, new_list), do: new_list
 end
