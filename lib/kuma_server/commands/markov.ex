@@ -97,7 +97,7 @@ defmodule KumaServer.Commands.Markov do
     file = File.read!(input_file)
 
     lines = file |> String.split("\n") |> Enum.take(-10_000)
-    lines = (for line <- lines do
+    lines = for line <- lines do
       case Regex.named_captures(~r/\[.*\] (?<user>.*): (?<msg>.*)/, line) do
         nil -> nil
         %{"user" => user, "msg" => msg} ->
